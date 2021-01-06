@@ -5,6 +5,7 @@ import 'fontsource-roboto';
 
 import materialBaseline from "./MaterialBaseline";
 import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,10 +17,12 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
     const classes = useStyles();
+    const [sidebarOpen, setSidebarOpen] = React.useState(false);
 
     return (
         <div className={classes.grow}>
-            <Header/>
+            <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
+            <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}/>
         </div>
     );
 }

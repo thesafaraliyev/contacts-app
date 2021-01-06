@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {makeStyles, fade} from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
 import {List, ListItem, ListItemText, ListItemAvatar, InputBase, Avatar, Paper, Grow} from '@material-ui/core';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -11,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(grey[500], 0.2),
+        backgroundColor: fade(theme.palette.action.hover, 0.07),
         // '&:hover': {
         //     backgroundColor: fade(grey[500], 0.35),
         // },
@@ -35,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
         '&:focus': {
-            backgroundColor: fade(grey[500], 0.1),
+            borderRadius: theme.shape.borderRadius,
+            backgroundColor: theme.palette.action.hover,
         },
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
     searchResultItem: {
         '&:hover': {
-            backgroundColor: fade(grey[500], 0.2),
+            backgroundColor: theme.palette.action.hover,
         }
     },
     searchResultItemAvatar: {

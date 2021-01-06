@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Header() {
+export default function Header({sidebarOpen, setSidebarOpen}) {
     const classes = useStyles();
 
     return (
@@ -40,6 +40,7 @@ export default function Header() {
                     edge="start"
                     color="inherit"
                     aria-label="open drawer"
+                    onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                     <MenuIcon/>
                 </IconButton>
