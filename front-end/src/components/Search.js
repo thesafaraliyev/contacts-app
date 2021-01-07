@@ -112,7 +112,7 @@ export default function Search() {
                 onBlur={() => setSearchBarFocused(false)}
             />
 
-            <Grow in={!!(searchBarFocused && searchResults.length)}>
+            <Grow mountOnEnter unmountOnExit in={!!(searchBarFocused && searchResults.length)}>
                 <Paper className={classes.searchResultsContainer} elevation={2}>
                     <List>
                         <ResultItem/>

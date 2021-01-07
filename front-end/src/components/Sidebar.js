@@ -45,7 +45,7 @@ export default function Sidebar({open, setOpen}) {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                 >
-                    <SideNavigation/>
+                    <SideNavigation open={open} setOpen={setOpen}/>
                 </Drawer>
             </Hidden>
             <Hidden xsDown>
