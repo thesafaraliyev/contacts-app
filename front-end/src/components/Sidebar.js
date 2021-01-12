@@ -15,10 +15,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     drawerPaper: {
-        padding: theme.spacing(0, 1),
         width: drawerWidth,
         backgroundColor: theme.palette.background.default,
-        border: 0,
     },
 }));
 

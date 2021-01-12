@@ -19,6 +19,7 @@ import AssistantOutlinedIcon from '@material-ui/icons/AssistantOutlined';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        padding: theme.spacing(0, 1),
         [theme.breakpoints.up('md')]: {
             '&:hover': {
                 overflow: 'auto',
