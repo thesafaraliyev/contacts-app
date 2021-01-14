@@ -78,6 +78,7 @@ export default function ContactsTable() {
                 rows={rows}
                 handleRowClick={handleRowClick}
                 selected={selected}
+                dense={dense}
             />
         </Table>
     );

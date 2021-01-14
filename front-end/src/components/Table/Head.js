@@ -19,12 +19,13 @@ const headCells = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-    selectedCount: {
-        textAlign: 'right',
-    },
     cell: {
         top: theme.spacing(6),
     },
+    actions: {
+        paddingTop: theme.spacing(0.75),
+        paddingBottom: theme.spacing(0.75),
+    }
 }));
 
 
@@ -35,7 +36,8 @@ export default function Head(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell className={classes.cell} padding="checkbox" >
+
+                <TableCell className={classes.cell} padding='checkbox'>
                     <Checkbox
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
@@ -45,41 +47,52 @@ export default function Head(props) {
                     />
                 </TableCell>
 
+                {/* actions for selected contacts */}
                 {numSelected > 0 ? (
                     <React.Fragment>
-                        <TableCell className={classes.cell} colSpan={4} padding="checkbox" size='medium'>
+                        <TableCell
+                            size='medium'
+                            colSpan={4}
+                            padding='checkbox'
+                            className={`${classes.actions} ${classes.cell}`}
+                        >
 
-                            <IconButton >
-                                <LabelOutlinedIcon />
+                            <IconButton>
+                                <LabelOutlinedIcon fontSize='small'/>
                             </IconButton>
 
-                            {numSelected < 51 && <IconButton >
-                                <MergeTypeOutlinedIcon/>
+                            {numSelected < 51 && <IconButton>
+                                <MergeTypeOutlinedIcon fontSize='small'/>
                             </IconButton>}
 
                             <IconButton>
-                                <MoreVertOutlinedIcon/>
+                                <MoreVertOutlinedIcon fontSize='small'/>
                             </IconButton>
 
                         </TableCell>
 
-                        <TableCell className={`${classes.selectedCount} ${classes.cell}`}  size='medium'>
+                        <TableCell className={classes.cell} align='right'>
                             {numSelected} selected
                         </TableCell>
+
                     </React.Fragment>
                 ) : (
+                    // actions for table
                     <React.Fragment>
+
                         {headCells.map(({id, label, isShown}) => (
-                            isShown ? <TableCell className={classes.cell} key={id} size='medium'>{label}</TableCell> : null
+                            isShown ?
+                                <TableCell size='medium' className={classes.cell} key={id}>{label}</TableCell> : null
                         ))}
-                        <TableCell className={classes.cell} padding='none' align='right' size='medium'>
-                            <IconButton  >
-                                <MoreVertOutlinedIcon/>
+
+                        <TableCell size='medium' className={classes.cell} align='right' padding='checkbox'>
+                            <IconButton size='medium'>
+                                <MoreVertOutlinedIcon fontSize='small'/>
                             </IconButton>
                         </TableCell>
+
                     </React.Fragment>
                 )}
-
 
             </TableRow>
         </TableHead>

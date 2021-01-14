@@ -1,26 +1,41 @@
 import React from 'react';
 
 import {makeStyles} from '@material-ui/core/styles';
-import {TableBody, TableRow, TableCell} from '@material-ui/core';
-import Checkbox from '@material-ui/core/Checkbox';
+import {TableBody, TableRow, TableCell, Checkbox, IconButton} from '@material-ui/core';
 
+import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
+import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 
 const useStyles = makeStyles((theme) => ({
-    rowRoot: {
-        '& $rowSelected, &$rowSelected:hover': {
+    row: {
+        '&$rowSelected, &$rowSelected:hover': {
             backgroundColor: theme.palette.action.selected,
+        },
+        '&:hover $hidden': {
+            visibility: 'visible'
         },
     },
     rowSelected: {
         backgroundColor: theme.palette.action.selected,
     },
-    cell: {
-
+    cell: {},
+    actionTd: {
+        minWidth: theme.spacing(18)
+    },
+    hidden: {
+        visibility: 'hidden'
+    },
+    visible: {
+        visibility: 'visible'
+    },
+    marginLeft: {
+        marginLeft: theme.spacing(2),
     }
 }));
 
-export default function Body({rows, selected, handleRowClick}) {
+export default function Body({rows, selected, handleRowClick, dense}) {
     const classes = useStyles();
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -36,13 +51,15 @@ export default function Body({rows, selected, handleRowClick}) {
                         tabIndex={-1}
                         key={row.name}
                         selected={isItemSelected}
-                        classes={{root: classes.rowRoot, selected: classes.rowSelected}}
+                        classes={{root: classes.row, selected: classes.rowSelected}}
                     >
-                        <TableCell padding="checkbox" >
+                        <TableCell padding='checkbox'>
                             <Checkbox
+                                className={`${classes.checkbox} ${dense ? '' : classes.hidden}`}
                                 onClick={(event) => handleRowClick(event, row.name)}
                                 checked={isItemSelected}
                                 color='default'
+                                classes={{checked: classes.visible}}
                                 inputProps={{'aria-labelledby': `contacts-table-checkbox-${index}`}}
                             />
                         </TableCell>
@@ -50,7 +67,18 @@ export default function Body({rows, selected, handleRowClick}) {
                         <TableCell className={classes.cell} style={{width: 210}}>{row.email}</TableCell>
                         <TableCell className={classes.cell} style={{width: 210}}>{row.phoneNumber}</TableCell>
                         <TableCell className={classes.cell} style={{width: 210}}>{row.carbs}</TableCell>
-                        <TableCell className={classes.cell} style={{width: 210}}>{row.protein}</TableCell>
+
+                        <TableCell className={classes.actionTd} align='right' padding='checkbox'>
+                            <IconButton className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
+                                <StarBorderOutlinedIcon fontSize='small'/>
+                            </IconButton>
+                            <IconButton className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
+                                <EditOutlinedIcon fontSize='small'/>
+                            </IconButton>
+                            <IconButton className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
+                                <MoreVertOutlinedIcon fontSize='small'/>
+                            </IconButton>
+                        </TableCell>
                     </TableRow>
                 );
             })}
