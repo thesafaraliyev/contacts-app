@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {TableHead, TableRow, TableCell, Checkbox, IconButton} from '@material-ui/core';
 
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
@@ -19,14 +19,17 @@ const headCells = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-    cell: {
-        top: theme.spacing(6),
-    },
     actions: {
-        paddingTop: theme.spacing(0.75),
-        paddingBottom: theme.spacing(0.75),
+        padding: theme.spacing(0.75, 0.25),
     }
 }));
+
+const Cell = withStyles((theme) => ({
+    head: {
+        top: theme.spacing(6),
+        color: theme.palette.text.secondary,
+    },
+}))(TableCell);
 
 
 export default function Head(props) {
@@ -37,7 +40,7 @@ export default function Head(props) {
         <TableHead>
             <TableRow>
 
-                <TableCell className={classes.cell} padding='checkbox'>
+                <Cell padding='checkbox'>
                     <Checkbox
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
@@ -45,17 +48,12 @@ export default function Head(props) {
                         color='default'
                         inputProps={{'aria-label': 'select all rows'}}
                     />
-                </TableCell>
+                </Cell>
 
                 {/* actions for selected contacts */}
                 {numSelected > 0 ? (
                     <React.Fragment>
-                        <TableCell
-                            size='medium'
-                            colSpan={4}
-                            padding='checkbox'
-                            className={`${classes.actions} ${classes.cell}`}
-                        >
+                        <Cell colSpan={4} size='medium' padding='checkbox' className={classes.actions}>
 
                             <IconButton>
                                 <LabelOutlinedIcon fontSize='small'/>
@@ -69,11 +67,9 @@ export default function Head(props) {
                                 <MoreVertOutlinedIcon fontSize='small'/>
                             </IconButton>
 
-                        </TableCell>
+                        </Cell>
 
-                        <TableCell className={classes.cell} align='right'>
-                            {numSelected} selected
-                        </TableCell>
+                        <Cell align='right'>{numSelected} selected</Cell>
 
                     </React.Fragment>
                 ) : (
@@ -81,15 +77,14 @@ export default function Head(props) {
                     <React.Fragment>
 
                         {headCells.map(({id, label, isShown}) => (
-                            isShown ?
-                                <TableCell size='medium' className={classes.cell} key={id}>{label}</TableCell> : null
+                            isShown ? <Cell size='medium' key={id}>{label}</Cell> : null
                         ))}
 
-                        <TableCell size='medium' className={classes.cell} align='right' padding='checkbox'>
+                        <Cell size='medium' align='right' padding='checkbox'>
                             <IconButton size='medium'>
                                 <MoreVertOutlinedIcon fontSize='small'/>
                             </IconButton>
-                        </TableCell>
+                        </Cell>
 
                     </React.Fragment>
                 )}
