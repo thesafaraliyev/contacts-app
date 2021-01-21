@@ -3,8 +3,8 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Table} from '@material-ui/core';
 
-import Head from './Head'
-import Body from './Body'
+import THead from './THead'
+import TBody from './TBody'
 
 
 function createData(name, email, phoneNumber, address, birthday) {
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ContactsTable() {
     const classes = useStyles();
     const [selected, setSelected] = React.useState([]);
-    const [dense, setDense] = React.useState(Boolean(parseInt(localStorage.getItem('densitySetting'), 10)));
+    const [dense, setDense] = React.useState(parseInt(localStorage.getItem('tableDensity') || 0, 10));
 
 
     const handleSelectAllClick = (event) => {
@@ -48,7 +48,7 @@ export default function ContactsTable() {
         setSelected([]);
     };
 
-    const handleRowClick = (event, name) => {
+    const handleRowClick = name => {
         const selectedIndex = selected.indexOf(name);
         let newSelected = [];
 
@@ -71,20 +71,20 @@ export default function ContactsTable() {
 
     return (
         <Table stickyHeader size={dense ? 'small' : 'medium'}>
-            <Head
-                numSelected={selected.length}
-                onSelectAllClick={handleSelectAllClick}
-                rowCount={rows.length}
+            <THead
+                styles={classes}
                 dense={dense}
                 setDense={setDense}
-                styles={classes}
+                rowCount={rows.length}
+                selectedCount={selected.length}
+                selectAllRows={handleSelectAllClick}
             />
-            <Body
+            <TBody
                 rows={rows}
-                handleRowClick={handleRowClick}
-                selected={selected}
                 dense={dense}
                 styles={classes}
+                selected={selected}
+                selectRow={handleRowClick}
             />
         </Table>
     );

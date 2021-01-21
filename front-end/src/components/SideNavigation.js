@@ -47,32 +47,24 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
-    listItem: {
+    item: {
         borderRadius: theme.shape.borderRadius,
         '&:hover': {
             backgroundColor: theme.palette.action.hover,
         },
-    },
-    listItemIcon: {
-        minWidth: 36,
+        '&>div:first-child': {
+            minWidth: 36,
+        }
     },
 }));
+
+const labels = [{id: 1, slug: 'friends', name: 'Friends'}, {id: 2, slug: 'family', name: 'Family'}];
 
 
 export default function SideNavigation({open, setOpen}) {
     const classes = useStyles();
     const [labelsOpen, setLabelsOpen] = React.useState(true);
-    const [selectedIndex, setSelectedIndex] = React.useState(null);
-
-    const handleListItemClick = (event, index) => {
-        // setOpen(!open)
-        setSelectedIndex(index);
-    };
-
-    const handleLabelsClick = () => {
-        setLabelsOpen(!labelsOpen);
-        setSelectedIndex('labels');
-    };
+    const [selected, setSelected] = React.useState(null);
 
 
     return (
@@ -88,37 +80,31 @@ export default function SideNavigation({open, setOpen}) {
                 <List dense={true}>
                     <ListItem
                         button
-                        className={classes.listItem}
-                        selected={selectedIndex === 'Contacts'}
-                        onClick={(event) => handleListItemClick(event, 'Contacts')}
+                        className={classes.item}
+                        selected={selected === 'Contacts'}
+                        onClick={() => setSelected('Contacts')}
                     >
-                        <ListItemIcon className={classes.listItemIcon}>
-                            <PersonOutlineOutlinedIcon fontSize='small'/>
-                        </ListItemIcon>
+                        <ListItemIcon><PersonOutlineOutlinedIcon fontSize='small'/></ListItemIcon>
                         <ListItemText primary='Contacts'/>
                     </ListItem>
 
                     <ListItem
                         button
-                        className={classes.listItem}
-                        selected={selectedIndex === 'frequent'}
-                        onClick={(event) => handleListItemClick(event, 'frequent')}
+                        className={classes.item}
+                        selected={selected === 'frequent'}
+                        onClick={() => setSelected('frequent')}
                     >
-                        <ListItemIcon className={classes.listItemIcon}>
-                            <RestoreOutlinedIcon fontSize='small'/>
-                        </ListItemIcon>
+                        <ListItemIcon><RestoreOutlinedIcon fontSize='small'/></ListItemIcon>
                         <ListItemText primary='Frequently created'/>
                     </ListItem>
 
                     <ListItem
                         button
-                        className={classes.listItem}
-                        selected={selectedIndex === 'suggestions'}
-                        onClick={(event) => handleListItemClick(event, 'suggestions')}
+                        className={classes.item}
+                        selected={selected === 'suggestions'}
+                        onClick={() => setSelected('suggestions')}
                     >
-                        <ListItemIcon className={classes.listItemIcon}>
-                            <AssistantOutlinedIcon fontSize='small'/>
-                        </ListItemIcon>
+                        <ListItemIcon><AssistantOutlinedIcon fontSize='small'/></ListItemIcon>
                         <ListItemText primary='Merge & Fix'/>
                     </ListItem>
 
@@ -129,10 +115,13 @@ export default function SideNavigation({open, setOpen}) {
                 <List dense={true}>
                     <ListItem
                         button
-                        className={classes.listItem}
-                        onClick={handleLabelsClick}
-                        selected={selectedIndex === 'labels'}>
-                        <ListItemIcon className={classes.listItemIcon}>
+                        className={classes.item}
+                        onClick={() => {
+                            setLabelsOpen(!labelsOpen);
+                            setSelected('labels');
+                        }}
+                        selected={selected === 'labels'}>
+                        <ListItemIcon>
                             {labelsOpen ? <ExpandLess fontSize='small'/> : <ExpandMore fontSize='small'/>}
                         </ListItemIcon>
                         <ListItemText primary='Labels'/>
@@ -140,27 +129,26 @@ export default function SideNavigation({open, setOpen}) {
 
                     <Collapse in={labelsOpen} timeout='auto' unmountOnExit>
                         <List dense={true} component='div' disablePadding>
-                            <ListItem
-                                button
-                                className={classes.listItem}
-                                selected={selectedIndex === 'awesome label'}
-                                onClick={(event) => handleListItemClick(event, 'awesome label')}
-                            >
-                                <ListItemIcon className={classes.listItemIcon}>
-                                    <LabelOutlinedIcon fontSize='small'/>
-                                </ListItemIcon>
-                                <ListItemText primary='Awesome label'/>
-                            </ListItem>
+                            {labels.map(({id, name, slug}) => (
+                                <ListItem
+                                    button
+                                    key={id}
+                                    className={classes.item}
+                                    selected={selected === slug}
+                                    onClick={() => setSelected(slug)}
+                                >
+                                    <ListItemIcon><LabelOutlinedIcon fontSize='small'/></ListItemIcon>
+                                    <ListItemText primary={name}/>
+                                </ListItem>
+                            ))}
 
                             <ListItem
                                 button
-                                className={classes.listItem}
-                                selected={selectedIndex === 'create'}
-                                onClick={(event) => handleListItemClick(event, 'create')}
+                                className={classes.item}
+                                selected={selected === 'create'}
+                                onClick={() => setSelected('create')}
                             >
-                                <ListItemIcon className={classes.listItemIcon}>
-                                    <AddOutlinedIcon fontSize='small'/>
-                                </ListItemIcon>
+                                <ListItemIcon><AddOutlinedIcon fontSize='small'/></ListItemIcon>
                                 <ListItemText primary='Create label'/>
                             </ListItem>
                         </List>
@@ -173,68 +161,59 @@ export default function SideNavigation({open, setOpen}) {
                 <List dense={true}>
                     <ListItem
                         button
-                        className={classes.listItem}
-                        selected={selectedIndex === 'import'}
-                        onClick={(event) => handleListItemClick(event, 'import')}
+                        className={classes.item}
+                        selected={selected === 'import'}
+                        onClick={() => setSelected('import')}
                     >
-                        <ListItemIcon className={classes.listItemIcon}>
-                            <CloudUploadOutlinedIcon fontSize='small'/>
-                        </ListItemIcon>
+                        <ListItemIcon><CloudUploadOutlinedIcon fontSize='small'/></ListItemIcon>
                         <ListItemText primary='Import'/>
                     </ListItem>
 
                     <ListItem
                         button
-                        className={classes.listItem}
-                        selected={selectedIndex === 'export'}
-                        onClick={(event) => handleListItemClick(event, 'export')}
+                        className={classes.item}
+                        selected={selected === 'export'}
+                        onClick={() => setSelected('export')}
                     >
-                        <ListItemIcon className={classes.listItemIcon}>
-                            <CloudDownloadOutlinedIcon fontSize='small'/>
-                        </ListItemIcon>
+                        <ListItemIcon><CloudDownloadOutlinedIcon fontSize='small'/></ListItemIcon>
                         <ListItemText primary='Export'/>
                     </ListItem>
 
                     <ListItem
                         button
-                        className={classes.listItem}
-                        selected={selectedIndex === 'print'}
-                        onClick={(event) => handleListItemClick(event, 'print')}
+                        className={classes.item}
+                        selected={selected === 'print'}
+                        onClick={() => setSelected('print')}
                     >
-                        <ListItemIcon className={classes.listItemIcon}>
-                            <PrintOutlinedIcon fontSize='small'/>
-                        </ListItemIcon>
+                        <ListItemIcon><PrintOutlinedIcon fontSize='small'/></ListItemIcon>
                         <ListItemText primary='Print'/>
                     </ListItem>
                 </List>
 
                 <Divider/>
 
-                {/* Archive and deleted contacts */}
+                {/* Archived and deleted contacts */}
                 <List dense={true}>
                     <ListItem
                         button
-                        className={classes.listItem}
-                        selected={selectedIndex === 'other'}
-                        onClick={(event) => handleListItemClick(event, 'other')}
+                        className={classes.item}
+                        selected={selected === 'other'}
+                        onClick={() => setSelected('other')}
                     >
-                        <ListItemIcon className={classes.listItemIcon}>
-                            <ArchiveOutlinedIcon fontSize='small'/>
-                        </ListItemIcon>
+                        <ListItemIcon><ArchiveOutlinedIcon fontSize='small'/></ListItemIcon>
                         <ListItemText primary='Other'/>
                     </ListItem>
 
                     <ListItem
                         button
-                        className={classes.listItem}
-                        selected={selectedIndex === 'trash'}
-                        onClick={(event) => handleListItemClick(event, 'trash')}
+                        className={classes.item}
+                        selected={selected === 'trash'}
+                        onClick={() => setSelected('trash')}
                     >
-                        <ListItemIcon className={classes.listItemIcon}>
-                            <DeleteOutlineOutlinedIcon fontSize='small'/>
-                        </ListItemIcon>
+                        <ListItemIcon><DeleteOutlineOutlinedIcon fontSize='small'/></ListItemIcon>
                         <ListItemText primary='Trash'/>
                     </ListItem>
+
                 </List>
 
             </div>

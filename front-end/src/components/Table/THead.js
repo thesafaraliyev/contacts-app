@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {TableHead, TableRow, TableCell, Checkbox, IconButton, Menu, MenuItem,} from '@material-ui/core';
@@ -8,6 +9,7 @@ import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import MergeTypeOutlinedIcon from '@material-ui/icons/MergeTypeOutlined';
 
 import DensitySetting from './Settings/Density';
+
 
 const useStyles = makeStyles((theme) => ({
     actionsCell: {
@@ -20,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
 const Cell = withStyles((theme) => ({
     head: {
         top: theme.spacing(6),
@@ -28,21 +31,10 @@ const Cell = withStyles((theme) => ({
 }))(TableCell);
 
 
-export default function Head(props) {
+export default function THead({selectAllRows, selectedCount, rowCount, setDense, dense, styles}) {
     const classes = useStyles();
-    const {onSelectAllClick, numSelected, rowCount, setDense, dense, styles} = props;
-
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [densityDialogOpen, setDensityDialogOpen] = React.useState(false);
-
-    const openTableSettingsMenu = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const openDensityDialog = () => {
-        setDensityDialogOpen(true);
-        setAnchorEl(null);
-    };
 
 
     return (
@@ -51,16 +43,16 @@ export default function Head(props) {
 
                 <Cell padding='checkbox'>
                     <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
+                        indeterminate={selectedCount > 0 && selectedCount < rowCount}
+                        checked={rowCount > 0 && selectedCount === rowCount}
+                        onChange={selectAllRows}
                         color='default'
                         inputProps={{'aria-label': 'select all rows'}}
                     />
                 </Cell>
 
                 {/* actions for selected contacts */}
-                {numSelected > 0 ? (
+                {selectedCount > 0 ? (
                     <React.Fragment>
                         <Cell colSpan={6} size='medium' padding='checkbox' className={classes.actionsCell}>
                             <div className={classes.actions}>
@@ -69,7 +61,7 @@ export default function Head(props) {
                                         <LabelOutlinedIcon fontSize='small'/>
                                     </IconButton>
 
-                                    {numSelected < 51 && <IconButton>
+                                    {selectedCount > 1 && selectedCount < 51 && <IconButton>
                                         <MergeTypeOutlinedIcon fontSize='small'/>
                                     </IconButton>}
 
@@ -77,7 +69,7 @@ export default function Head(props) {
                                         <MoreVertOutlinedIcon fontSize='small'/>
                                     </IconButton>
                                 </span>
-                                <span>{numSelected} selected</span>
+                                <span>{selectedCount} selected</span>
                             </div>
 
                         </Cell>
@@ -95,7 +87,7 @@ export default function Head(props) {
 
                         {/* Table settings */}
                         <Cell size='medium' align='right' padding='checkbox'>
-                            <IconButton size='medium' onClick={openTableSettingsMenu}>
+                            <IconButton size='medium' onClick={event => setAnchorEl(event.currentTarget)}>
                                 <MoreVertOutlinedIcon fontSize='small'/>
                             </IconButton>
 
@@ -105,7 +97,12 @@ export default function Head(props) {
                                 open={Boolean(anchorEl)}
                                 onClose={() => setAnchorEl(null)}
                             >
-                                <MenuItem onClick={openDensityDialog}>Table density</MenuItem>
+                                <MenuItem onClick={() => {
+                                    setDensityDialogOpen(true);
+                                    setAnchorEl(null);
+                                }}>
+                                    Table density
+                                </MenuItem>
 
                                 <DensitySetting
                                     open={densityDialogOpen}
@@ -123,3 +120,13 @@ export default function Head(props) {
         </TableHead>
     );
 }
+
+
+THead.propTypes = {
+    dense: PropTypes.number.isRequired,
+    setDense: PropTypes.func.isRequired,
+    selectAllRows: PropTypes.func.isRequired,
+    rowCount: PropTypes.number.isRequired,
+    selectedCount: PropTypes.number.isRequired,
+    styles: PropTypes.object.isRequired,
+};

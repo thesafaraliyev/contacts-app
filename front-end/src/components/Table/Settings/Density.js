@@ -38,13 +38,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Density({open, setOpen, dense, setDense}) {
     const classes = useStyles()
     const [imgSrc, setImgSrc] = React.useState(dense ? compact : comfortable);
-    const [value, setValue] = React.useState(dense ? 1 : 0);
+    const [value, setValue] = React.useState(dense);
 
 
     const handleClose = () => {
         setOpen(false);
         setDense(value);
-        localStorage.setItem('densitySetting', JSON.stringify(value))
+        localStorage.setItem('tableDensity', JSON.stringify(value))
     };
 
     const handleChange = type => {
@@ -82,7 +82,7 @@ export default function Density({open, setOpen, dense, setDense}) {
             </DialogContent>
 
             <DialogActions>
-                <Button onClick={handleClose} color='default' autoFocus >Done</Button>
+                <Button onClick={handleClose} color='default' autoFocus>Done</Button>
             </DialogActions>
         </Dialog>
     );

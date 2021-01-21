@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {TableBody, TableRow, TableCell, Checkbox, Avatar, IconButton} from '@material-ui/core';
@@ -6,6 +7,7 @@ import {TableBody, TableRow, TableCell, Checkbox, Avatar, IconButton} from '@mat
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+
 import SectionHeader from "./SectionHeader";
 
 
@@ -69,9 +71,9 @@ const Cell = withStyles((theme) => ({
 }))(TableCell);
 
 
-export default function Body({rows, selected, handleRowClick, dense, styles}) {
+export default function TBody({rows, selected, selectRow, dense, styles}) {
     const classes = useStyles();
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = name => selected.indexOf(name) !== -1;
 
     return (
         <TableBody>
@@ -92,7 +94,7 @@ export default function Body({rows, selected, handleRowClick, dense, styles}) {
                     >
                         <TableCell padding='checkbox'>
                             <Checkbox
-                                onClick={(event) => handleRowClick(event, row.name)}
+                                onClick={() => selectRow(row.name)}
                                 checked={isItemSelected}
                                 color='default'
                                 classes={{checked: classes.visible}}
@@ -127,3 +129,12 @@ export default function Body({rows, selected, handleRowClick, dense, styles}) {
         </TableBody>
     );
 }
+
+
+TBody.propTypes = {
+    rows: PropTypes.array.isRequired,
+    dense: PropTypes.number.isRequired,
+    styles: PropTypes.object.isRequired,
+    selected: PropTypes.array.isRequired,
+    selectRow: PropTypes.func.isRequired,
+};
