@@ -20,7 +20,7 @@ export default function SectionHeader({header, rowCount}) {
 
     return (
         <TableRow>
-            <TableCell colSpan={6} size='small' padding='default' classes={{sizeSmall: classes.root}}>
+            <TableCell colSpan={7} size='small' padding='default' classes={{sizeSmall: classes.root}}>
                 <Typography variant="overline" display='block' color='textSecondary' className={classes.text}>
                     {header} ({rowCount})
                 </Typography>

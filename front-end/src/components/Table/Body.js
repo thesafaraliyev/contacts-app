@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {TableBody, TableRow, TableCell, Checkbox, Avatar, IconButton} from '@material-ui/core';
 
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
@@ -24,12 +24,6 @@ const useStyles = makeStyles((theme) => ({
     rowSelected: {
         backgroundColor: theme.palette.action.selected,
     },
-    cell: {
-        cursor: 'pointer',
-    },
-    actionTd: {
-        minWidth: theme.spacing(18)
-    },
     hidden: {
         display: 'none',
     },
@@ -44,9 +38,38 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(4),
         marginLeft: theme.spacing(0.5),
     },
+    nameCell: {
+        maxWidth: theme.spacing(27)
+    },
+    emailCell: {
+        maxWidth: theme.spacing(26)
+    },
+    phoneNumberCell: {
+        maxWidth: theme.spacing(24)
+    },
+    addressCell: {
+        maxWidth: theme.spacing(22)
+    },
+    birthdayCell: {
+        maxWidth: theme.spacing(22)
+    },
+    actionsCell: {
+        minWidth: theme.spacing(18)
+    },
 }));
 
-export default function Body({rows, selected, handleRowClick, dense}) {
+
+const Cell = withStyles((theme) => ({
+    body: {
+        cursor: 'pointer',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+    },
+}))(TableCell);
+
+
+export default function Body({rows, selected, handleRowClick, dense, styles}) {
     const classes = useStyles();
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -81,12 +104,13 @@ export default function Body({rows, selected, handleRowClick, dense}) {
                                 alt="Remy Sharp"
                                 src="/static/images/avatar/1.jpg"/>}
                         </TableCell>
-                        <TableCell className={classes.cell} style={{width: 230}}>{row.name}</TableCell>
-                        <TableCell className={classes.cell} style={{width: 210}}>{row.email}</TableCell>
-                        <TableCell className={classes.cell} style={{width: 210}}>{row.phoneNumber}</TableCell>
-                        <TableCell className={classes.cell} style={{width: 210}}>{row.carbs}</TableCell>
+                        <Cell className={classes.nameCell}>{row.name}</Cell>
+                        <Cell className={`${classes.emailCell} ${styles.xsShow}`}>{row.email}</Cell>
+                        <Cell className={`${classes.phoneNumberCell} ${styles.mdShow}`}>{row.phoneNumber}</Cell>
+                        <Cell className={`${classes.addressCell} ${styles.mdShow}`}>{row.address}</Cell>
+                        <Cell className={`${classes.birthdayCell} ${styles.lgShow}`}>{row.birthday}</Cell>
 
-                        <TableCell className={classes.actionTd} align='right' padding='checkbox'>
+                        <TableCell className={classes.actionsCell} align='right' padding='checkbox'>
                             <IconButton className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
                                 <StarBorderOutlinedIcon fontSize='small'/>
                             </IconButton>

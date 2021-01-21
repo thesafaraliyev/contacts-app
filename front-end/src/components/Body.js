@@ -9,7 +9,7 @@ import ContactsTable from "./Table";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        padding: theme.spacing(0, 3),
+        padding: theme.spacing(0, 3, 1, 3),
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
