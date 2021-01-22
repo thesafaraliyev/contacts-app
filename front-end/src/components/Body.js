@@ -63,12 +63,12 @@ export default function Body({sidebarOpen}) {
             <ContactsTable contacts={contacts}/>
 
             <Hidden smUp>
-                <Fab size='medium' className={classes.xsFab}>
+                <Fab color='secondary' size='medium' className={classes.xsFab}>
                     <PersonAddOutlinedIcon fontSize='small'/>
                 </Fab>
             </Hidden>
             <Hidden xsDown>
-                <Fab size='medium' variant='extended' className={classes.fab}>
+                <Fab color='secondary' size='medium' variant='extended' className={classes.fab}>
                     <PersonAddOutlinedIcon fontSize='small'/> Create contact
                 </Fab>
             </Hidden>

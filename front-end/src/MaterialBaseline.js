@@ -12,8 +12,11 @@ export default function materialBaseline(Component) {
             () =>
                 createMuiTheme({
                     palette: {
-                        // type: 'dark'
+                        // type: 'dark',
                         type: prefersDarkMode ? 'dark' : 'light',
+                        secondary: {
+                            main: '#009688'
+                        }
                     },
                 }),
             [prefersDarkMode],

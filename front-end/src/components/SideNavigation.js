@@ -16,6 +16,8 @@ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined'
 import RestoreOutlinedIcon from '@material-ui/icons/RestoreOutlined';
 import AssistantOutlinedIcon from '@material-ui/icons/AssistantOutlined';
 
+import LabelForm from './LabelForm';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
             overflow: 'auto',
         }
     },
+    toolbar: {
+        paddingLeft: theme.spacing(3)
+    },
     logo: {
         [theme.breakpoints.up('sm')]: {
             display: 'none',
@@ -61,15 +66,19 @@ const useStyles = makeStyles((theme) => ({
 const labels = [{id: 1, slug: 'friends', name: 'Friends'}, {id: 2, slug: 'family', name: 'Family'}];
 
 
-export default function SideNavigation({open, setOpen}) {
+export default function SideNavigation() {
     const classes = useStyles();
     const [labelsOpen, setLabelsOpen] = React.useState(true);
     const [selected, setSelected] = React.useState(null);
+    const [formOpen, setFormOpen] = React.useState(false);
 
 
     return (
         <React.Fragment>
-            <Toolbar variant='dense'>
+
+            <LabelForm open={formOpen} setOpen={setFormOpen}/>
+
+            <Toolbar variant='dense' className={classes.toolbar}>
                 <Typography variant="h6" noWrap className={classes.logo}>
                     Contacts App
                 </Typography>
@@ -146,7 +155,7 @@ export default function SideNavigation({open, setOpen}) {
                                 button
                                 className={classes.item}
                                 selected={selected === 'create'}
-                                onClick={() => setSelected('create')}
+                                onClick={() => {setSelected('create'); setFormOpen(true)}}
                             >
                                 <ListItemIcon><AddOutlinedIcon fontSize='small'/></ListItemIcon>
                                 <ListItemText primary='Create label'/>

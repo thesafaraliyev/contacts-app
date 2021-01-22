@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     actions: {
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 }));
 
@@ -46,7 +46,6 @@ export default function THead({selectAllRows, selectedCount, rowCount, setDense,
                         indeterminate={selectedCount > 0 && selectedCount < rowCount}
                         checked={rowCount > 0 && selectedCount === rowCount}
                         onChange={selectAllRows}
-                        color='default'
                         inputProps={{'aria-label': 'select all rows'}}
                     />
                 </Cell>

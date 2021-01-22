@@ -14,7 +14,7 @@ import SectionHeader from "./SectionHeader";
 const useStyles = makeStyles((theme) => ({
     row: {
         '&$rowSelected, &$rowSelected:hover': {
-            backgroundColor: theme.palette.action.selected,
+            backgroundColor: theme.palette.action.hover,
         },
         '&:hover $hidden': {
             display: 'inline-flex',
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     rowSelected: {
-        backgroundColor: theme.palette.action.selected,
+        backgroundColor: theme.palette.action.hover,
     },
     hidden: {
         display: 'none',
@@ -80,7 +80,7 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
 
             <SectionHeader header={'Contacts'} rowCount={rows.length}/>
 
-            {rows.map((row, index) => {
+            {rows.map(row => {
                 const isItemSelected = isSelected(row.name);
 
                 return (
@@ -96,7 +96,6 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
                             <Checkbox
                                 onClick={() => selectRow(row.name)}
                                 checked={isItemSelected}
-                                color='default'
                                 classes={{checked: classes.visible}}
                                 className={`${dense ? '' : classes.hidden}`}
                             />
