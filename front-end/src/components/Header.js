@@ -42,7 +42,7 @@ export default function Header({sidebarOpen, setSidebarOpen}) {
                     aria-label="open drawer"
                     onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
-                    <MenuIcon/>
+                    <MenuIcon fontSize='small'/>
                 </IconButton>
 
                 <Typography variant="h6" noWrap className={classes.logo}>

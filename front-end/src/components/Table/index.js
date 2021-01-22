@@ -7,14 +7,6 @@ import THead from './THead'
 import TBody from './TBody'
 
 
-function createData(name, email, phoneNumber, address, birthday) {
-    return {name, email, phoneNumber, address, birthday};
-}
-
-const rows = [
-];
-
-
 const useStyles = makeStyles((theme) => ({
     lgShow: {
         [theme.breakpoints.down('lg')]: {
@@ -33,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ContactsTable() {
+
+export default function ContactsTable({contacts}) {
     const classes = useStyles();
     const [selected, setSelected] = React.useState([]);
     const [dense, setDense] = React.useState(parseInt(localStorage.getItem('tableDensity') || 0, 10));
@@ -41,7 +34,7 @@ export default function ContactsTable() {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
+            const newSelecteds = contacts.map((n) => n.name);
             setSelected(newSelecteds);
             return;
         }
@@ -75,12 +68,12 @@ export default function ContactsTable() {
                 styles={classes}
                 dense={dense}
                 setDense={setDense}
-                rowCount={rows.length}
+                rowCount={contacts.length}
                 selectedCount={selected.length}
                 selectAllRows={handleSelectAllClick}
             />
             <TBody
-                rows={rows}
+                rows={contacts}
                 dense={dense}
                 styles={classes}
                 selected={selected}

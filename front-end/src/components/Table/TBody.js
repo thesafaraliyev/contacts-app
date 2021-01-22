@@ -41,19 +41,19 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(0.5),
     },
     nameCell: {
-        maxWidth: theme.spacing(27)
+        maxWidth: theme.spacing(22)
     },
     emailCell: {
-        maxWidth: theme.spacing(26)
+        maxWidth: theme.spacing(22)
     },
     phoneNumberCell: {
-        maxWidth: theme.spacing(24)
+        maxWidth: theme.spacing(18)
     },
     addressCell: {
         maxWidth: theme.spacing(22)
     },
     birthdayCell: {
-        maxWidth: theme.spacing(22)
+        maxWidth: theme.spacing(18)
     },
     actionsCell: {
         minWidth: theme.spacing(18)
