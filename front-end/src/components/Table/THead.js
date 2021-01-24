@@ -7,6 +7,9 @@ import {TableHead, TableRow, TableCell, Checkbox, IconButton, Menu, MenuItem,} f
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 import MergeTypeOutlinedIcon from '@material-ui/icons/MergeTypeOutlined';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Typography from '@material-ui/core/Typography';
+import FormatListBulletedRoundedIcon from '@material-ui/icons/FormatListBulletedRounded';
 
 import DensitySetting from './Settings/Density';
 
@@ -19,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+    },
+    menuIcon: {
+        minWidth: theme.spacing(4.5),
     }
 }));
 
@@ -95,12 +101,21 @@ export default function THead({selectAllRows, selectedCount, rowCount, setDense,
                                 keepMounted
                                 open={Boolean(anchorEl)}
                                 onClose={() => setAnchorEl(null)}
+                                getContentAnchorEl={null}
+                                anchorOrigin={{vertical: 'center', horizontal: 'center'}}
+                                transformOrigin={{vertical: "top", horizontal: "right"}}
                             >
-                                <MenuItem onClick={() => {
-                                    setDensityDialogOpen(true);
-                                    setAnchorEl(null);
-                                }}>
-                                    Table density
+                                <MenuItem
+                                    onClick={() => {
+                                        setDensityDialogOpen(true);
+                                        setAnchorEl(null);
+                                    }}
+                                    dense
+                                >
+                                    <ListItemIcon className={classes.menuIcon}>
+                                        <FormatListBulletedRoundedIcon fontSize='small'/>
+                                    </ListItemIcon>
+                                    <Typography variant='body2'>Change display density</Typography>
                                 </MenuItem>
 
                                 <DensitySetting

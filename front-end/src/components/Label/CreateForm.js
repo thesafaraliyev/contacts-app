@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Button, DialogTitle, TextField, Dialog, DialogContent, DialogActions, Grow} from '@material-ui/core';
+import {
+    Button,
+    DialogTitle,
+    TextField,
+    Dialog,
+    DialogContent,
+    DialogActions,
+    Grow,
+    useMediaQuery
+} from '@material-ui/core';
 import {useTheme} from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 
 export default function CreateForm({open, setOpen, onSubmit, title, editObj}) {

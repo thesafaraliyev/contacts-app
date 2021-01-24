@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.action.hover,
         },
         '&>div:first-child': {
-            minWidth: 36,
+            minWidth: theme.spacing(4.5),
         }
     },
     itemText: {

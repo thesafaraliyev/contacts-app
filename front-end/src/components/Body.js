@@ -45,11 +45,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const createContact = (name, email, phoneNumber, address, birthday)  => {
+const createContact = (name, email, phoneNumber, address, birthday) => {
     return {name, email, phoneNumber, address, birthday};
 }
 
 const contacts = [
+    createContact('Trevor Philips', 'trevorphilips@mail.com', '+2024561111', 'Los Santos, San Andreas', '11 Nov 1996'),
+    createContact('Tommy Vercetti', 'tommyvercetti@mail.com', '+442078391377', 'Miami, Florida', '29 Jun 1995'),
 ];
 
 

@@ -1,7 +1,16 @@
 import React from 'react';
 
-import {makeStyles} from '@material-ui/core/styles';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, ButtonGroup} from '@material-ui/core';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    ButtonGroup,
+    Grow,
+    useMediaQuery
+} from '@material-ui/core';
 
 import comfortable from '../../../../public/assets/images/comfortable.png'
 import compact from '../../../../public/assets/images/compact.png'
@@ -39,6 +48,8 @@ export default function Density({open, setOpen, dense, setDense}) {
     const classes = useStyles()
     const [imgSrc, setImgSrc] = React.useState(dense ? compact : comfortable);
     const [value, setValue] = React.useState(dense);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
 
     const handleClose = () => {
@@ -57,7 +68,9 @@ export default function Density({open, setOpen, dense, setDense}) {
             open={open}
             fullWidth
             onClose={handleClose}
+            fullScreen={fullScreen}
             className={classes.root}
+            TransitionComponent={Grow}
         >
             <DialogTitle>{'Display density'}</DialogTitle>
 
@@ -65,16 +78,16 @@ export default function Density({open, setOpen, dense, setDense}) {
                 <div className={classes.imgContainer}>
                     <img src={imgSrc} alt={`Density ${value}`} className={classes.media}/>
                 </div>
-                <ButtonGroup color='default' className={classes.buttonGroup} disableRipple>
+                <ButtonGroup className={classes.buttonGroup} disableElevation disableRipple size='small'>
                     <Button
                         className={classes.button}
-                        variant={`${value === 0 ? 'contained' : 'outlined'}`}
+                        variant={`${value === 0 ? 'contained' : 'text'}`}
                         onClick={() => handleChange(0)}>
                         Comfortable
                     </Button>
                     <Button
                         className={classes.button}
-                        variant={`${value === 1 ? 'contained' : 'outlined'}`}
+                        variant={`${value === 1 ? 'contained' : 'text'}`}
                         onClick={() => handleChange(1)}>
                         Compact
                     </Button>

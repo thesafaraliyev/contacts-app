@@ -12,9 +12,9 @@ import {
     FormControl,
     FormControlLabel,
     Typography,
-    Grow
+    Grow,
+    useMediaQuery
 } from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 
 
