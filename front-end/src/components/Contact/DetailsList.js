@@ -46,8 +46,8 @@ const SecondaryText = ({text}) => {
 }
 
 const prepJobAndCompanyText = contact => {
-    const hasJobTitle = contact.hasOwnProperty('jobTitle');
-    const hasCompany = contact.hasOwnProperty('company');
+    const hasJobTitle = contact.jobTitle.length
+    const hasCompany = contact.company.length;
 
     if (hasJobTitle && hasCompany) {
         return `${contact.jobTitle}, ${contact.company}`
@@ -68,7 +68,7 @@ const DetailsList = ({contact}) => {
 
     return (
         <List dense>
-            {'numbers' in contact && contact.numbers.map((number, index) => (
+            {contact.numbers.map((number, index) => (
                 <ListItem key={index} className={classes.item}>
                     {index === 0 && <ListItemIcon><PhoneOutlinedIcon fontSize='small'/></ListItemIcon>}
                     <ListItemText
@@ -80,7 +80,7 @@ const DetailsList = ({contact}) => {
                 </ListItem>
             ))}
 
-            {'mails' in contact && contact.mails.map((mail, index) => (
+            {contact.mails.map((mail, index) => (
                 <ListItem key={index} className={classes.item}>
                     {index === 0 && <ListItemIcon><MailOutlinedIcon fontSize='small'/></ListItemIcon>}
                     <ListItemText
@@ -92,7 +92,7 @@ const DetailsList = ({contact}) => {
                 </ListItem>
             ))}
 
-            {'address' in contact && <ListItem>
+            {contact.address.length > 0 && <ListItem>
                 <ListItemIcon><LocationOnOutlinedIcon fontSize='small'/></ListItemIcon>
                 <ListItemText primary={contact.address}/>
             </ListItem>}
@@ -102,12 +102,12 @@ const DetailsList = ({contact}) => {
                 <ListItemText primary={jobAndCompanyText}/>
             </ListItem>}
 
-            {'birthday' in contact && <ListItem>
+            {contact.birthday.length > 0 && <ListItem>
                 <ListItemIcon><CakeOutlinedIcon fontSize='small'/></ListItemIcon>
                 <ListItemText primary={contact.birthday}/>
             </ListItem>}
 
-            {'websites' in contact && contact.websites.map((website, index) => (
+            {contact.websites.map((website, index) => (
                 <ListItem key={index} className={classes.item}>
                     {index === 0 && <ListItemIcon><LinkOutlinedIcon fontSize='small'/></ListItemIcon>}
                     <ListItemText

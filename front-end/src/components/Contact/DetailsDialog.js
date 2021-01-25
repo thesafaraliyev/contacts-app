@@ -9,7 +9,8 @@ import {
     Dialog,
     DialogContent,
     Grow,
-    useMediaQuery
+    useMediaQuery,
+    Hidden
 } from '@material-ui/core';
 import {useTheme, makeStyles} from '@material-ui/core/styles';
 
@@ -35,20 +36,20 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(7.5),
         height: theme.spacing(7.5),
     },
-    contactName: {
+    titleContainer: {
         marginLeft: theme.spacing(3),
         flexGrow: 2,
     },
-    actions: {
-        display: 'flex',
-    },
-    chipContainer: {
-        '& > *': {
-            margin: theme.spacing(0.5),
-        },
+    chip: {
+        margin: theme.spacing(1, 1, 0, 0),
     },
     contactDetails: {
         paddingTop: theme.spacing(2.5),
+    },
+    actions: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        paddingBottom: theme.spacing(2),
     },
 }));
 
@@ -66,10 +67,6 @@ const contact = {
             label: 'Home',
         },
         {
-            value: '+2024564444',
-            label: 'Mobile',
-        },
-        {
             value: '+2024567777',
             label: '',
         },
@@ -83,19 +80,11 @@ const contact = {
             value: 'trevorswork@mail.com',
             label: '',
         },
-        {
-            value: 'trevorsother@mail.com',
-            label: 'Other',
-        },
     ],
     websites: [
         {
-            value: 'website.com',
-            label: '',
-        },
-        {
-            value: 'second-website.com',
-            label: 'Profile',
+            value: 'trevorphilips.com',
+            label: 'Blog',
         },
     ],
     labels: [
@@ -121,10 +110,36 @@ const DetailsDialog = ({id, open, setOpen}) => {
         setOpen(false);
     };
 
+    const settingButtons = (
+        <React.Fragment>
+            <IconButton>
+                <StarBorderOutlinedIcon fontSize='small'/>
+            </IconButton>
+            <IconButton>
+                <EditOutlinedIcon fontSize='small'/>
+            </IconButton>
+            <IconButton>
+                <MoreVertOutlinedIcon fontSize='small'/>
+            </IconButton>
+        </React.Fragment>
+    );
+
 
     return (
         <Dialog open={open} onClose={handleClose} TransitionComponent={Grow} fullScreen={fullScreen} fullWidth>
             <DialogContent className={classes.content}>
+
+                <Hidden smUp>
+                    <div className={classes.actions}>
+                        <div>
+                            <IconButton onClick={() => setOpen(false)}>
+                                <ClearRoundedIcon fontSize='small'/>
+                            </IconButton>
+                        </div>
+
+                        <div>{settingButtons}</div>
+                    </div>
+                </Hidden>
 
                 <div className={classes.header}>
                     <Avatar
@@ -133,30 +148,24 @@ const DetailsDialog = ({id, open, setOpen}) => {
                         src="/static/images/avatar/1.jpg"
                         className={classes.avatar}/>
 
-                    <div className={classes.contactName}>
-                        <Typography variant='h5'>{contact.firstname} {contact.surname}</Typography>
+                    <div className={classes.titleContainer}>
+                        <Typography variant='h5'>
+                            {contact.firstname} {contact.surname}
+                        </Typography>
 
-                        <div className={classes.chipContainer}>
-                            {contact.labels.map(label => (
-                                <Chip clickable variant='outlined' key={label.slug} label={label.name}/>
+                        <div>
+                            {contact.labels.map(({slug, name}) => (
+                                <Chip clickable variant='outlined' className={classes.chip} key={slug} label={name}/>
                             ))}
                         </div>
                     </div>
 
-                    <div className={classes.actions}>
-                        <IconButton>
-                            <StarBorderOutlinedIcon fontSize='small'/>
-                        </IconButton>
-                        <IconButton>
-                            <EditOutlinedIcon fontSize='small'/>
-                        </IconButton>
-                        <IconButton>
-                            <MoreVertOutlinedIcon fontSize='small'/>
-                        </IconButton>
+                    <Hidden xsDown>
+                        {settingButtons}
                         <IconButton onClick={() => setOpen(false)}>
                             <ClearRoundedIcon fontSize='small'/>
                         </IconButton>
-                    </div>
+                    </Hidden>
                 </div>
 
                 <Divider/>
