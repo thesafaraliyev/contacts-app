@@ -8,7 +8,8 @@ import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
-import SectionHeader from "./SectionHeader";
+import SectionHeader from './SectionHeader';
+import DetailsDialog from '../Contact/DetailsDialog';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -73,10 +74,30 @@ const Cell = withStyles((theme) => ({
 
 export default function TBody({rows, selected, selectRow, dense, styles}) {
     const classes = useStyles();
+    const [selectedId, setSelectedId] = React.useState(null);
+    const [detailsOpen, setDetailsOpen] = React.useState(true);
+
     const isSelected = name => selected.indexOf(name) !== -1;
+
+
+    const handleCheckboxCheck = event => {
+        event.stopPropagation();
+        selectRow(event.target.value);
+    }
+
+
+    const handleRowClick = id => {
+        setSelectedId(id);
+        setDetailsOpen(true);
+    }
 
     return (
         <TableBody>
+            <DetailsDialog
+                id={selectedId}
+                open={detailsOpen}
+                setOpen={setDetailsOpen}
+            />
 
             <SectionHeader header={'Contacts'} rowCount={rows.length}/>
 
@@ -85,6 +106,7 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
 
                 return (
                     <TableRow
+                        onClick={() => handleRowClick(row.id)}
                         hover
                         aria-checked={isItemSelected}
                         tabIndex={-1}
@@ -94,7 +116,8 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
                     >
                         <TableCell padding='checkbox'>
                             <Checkbox
-                                onClick={() => selectRow(row.name)}
+                                value={row.name}
+                                onClick={handleCheckboxCheck}
                                 checked={isItemSelected}
                                 classes={{checked: classes.visible}}
                                 className={`${dense ? '' : classes.hidden}`}

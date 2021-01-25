@@ -24,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function DeleteDialog({label, open, setOpen, onSubmit}) {
+const DeleteDialog = ({label, open, setOpen, onSubmit}) => {
     const classes = useStyles();
     const [type, setType] = React.useState('1');
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
 
     const handleChange = event => setType(event.target.value);
@@ -82,6 +82,8 @@ export default function DeleteDialog({label, open, setOpen, onSubmit}) {
         </Dialog>
     );
 }
+
+export default DeleteDialog;
 
 
 DeleteDialog.propTypes = {

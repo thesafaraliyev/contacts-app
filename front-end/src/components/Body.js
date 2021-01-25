@@ -5,6 +5,7 @@ import {Toolbar, Fab, Hidden} from '@material-ui/core';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 
 import ContactsTable from "./Table";
+// import Toast from "./Shared/Toast";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,13 +46,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const createContact = (name, email, phoneNumber, address, birthday) => {
-    return {name, email, phoneNumber, address, birthday};
+const createContact = (id, name, email, phoneNumber, address, birthday) => {
+    return {id, name, email, phoneNumber, address, birthday};
 }
 
 const contacts = [
-    createContact('Trevor Philips', 'trevorphilips@mail.com', '+2024561111', 'Los Santos, San Andreas', '11 Nov 1996'),
-    createContact('Tommy Vercetti', 'tommyvercetti@mail.com', '+442078391377', 'Miami, Florida', '29 Jun 1995'),
+    createContact(1, 'Trevor Philips', 'trevorphilips@mail.com', '+2024561111', 'Los Santos, San Andreas', '11 Nov 1996'),
+    createContact(2, 'Tommy Vercetti', 'tommyvercetti@mail.com', '+442078391377', 'Miami, Florida', '29 Jun 1995'),
 ];
 
 
@@ -74,6 +75,8 @@ export default function Body({sidebarOpen}) {
                     <PersonAddOutlinedIcon fontSize='small'/> Create contact
                 </Fab>
             </Hidden>
+
+            {/*<Toast/>*/}
         </main>
     );
 }

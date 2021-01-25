@@ -44,12 +44,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Density({open, setOpen, dense, setDense}) {
+const Density = ({open, setOpen, dense, setDense}) => {
     const classes = useStyles()
     const [imgSrc, setImgSrc] = React.useState(dense ? compact : comfortable);
     const [value, setValue] = React.useState(dense);
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
 
     const handleClose = () => {
@@ -100,3 +100,5 @@ export default function Density({open, setOpen, dense, setDense}) {
         </Dialog>
     );
 }
+
+export default React.memo(Density);

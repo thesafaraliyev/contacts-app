@@ -14,11 +14,11 @@ import {
 import {useTheme} from "@material-ui/core/styles";
 
 
-export default function CreateForm({open, setOpen, onSubmit, title, editObj}) {
+const CreateForm = ({open, setOpen, onSubmit, title, editObj}) => {
     const [error, setError] = React.useState('');
     const textInput = React.useRef(null);
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
 
     const handleClose = () => setOpen(false);
@@ -78,6 +78,8 @@ export default function CreateForm({open, setOpen, onSubmit, title, editObj}) {
         </Dialog>
     );
 }
+
+export default CreateForm;
 
 
 CreateForm.propTypes = {
