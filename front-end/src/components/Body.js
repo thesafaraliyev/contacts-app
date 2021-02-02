@@ -5,6 +5,7 @@ import {Toolbar, Fab, Hidden} from '@material-ui/core';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 
 import ContactsTable from "./Table";
+import CreateDialog from "./Contact/Create";
 // import Toast from "./Shared/Toast";
 
 
@@ -58,6 +59,12 @@ const contacts = [
 
 export default function Body({sidebarOpen}) {
     const classes = useStyles();
+    const [contactCreateOpen, setContactCreateOpen] = React.useState(false);
+
+
+    const handleOpen = () => {
+        setContactCreateOpen(true)
+    }
 
     return (
         <main className={`${classes.root} ${sidebarOpen ? classes.contentShift : ''}`}>
@@ -66,16 +73,17 @@ export default function Body({sidebarOpen}) {
             <ContactsTable contacts={contacts}/>
 
             <Hidden smUp>
-                <Fab color='secondary' size='medium' className={classes.xsFab}>
+                <Fab color='secondary' size='medium' className={classes.xsFab} onClick={handleOpen}>
                     <PersonAddOutlinedIcon fontSize='small'/>
                 </Fab>
             </Hidden>
             <Hidden xsDown>
-                <Fab color='secondary' size='medium' variant='extended' className={classes.fab}>
+                <Fab color='secondary' size='medium' variant='extended' className={classes.fab} onClick={handleOpen}>
                     <PersonAddOutlinedIcon fontSize='small'/> Create contact
                 </Fab>
             </Hidden>
 
+            <CreateDialog open={contactCreateOpen} setOpen={setContactCreateOpen}/>
             {/*<Toast/>*/}
         </main>
     );

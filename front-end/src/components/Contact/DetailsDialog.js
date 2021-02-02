@@ -10,7 +10,8 @@ import {
     DialogContent,
     Grow,
     useMediaQuery,
-    Hidden
+    Hidden,
+    DialogTitle
 } from '@material-ui/core';
 import {useTheme, makeStyles} from '@material-ui/core/styles';
 
@@ -23,11 +24,11 @@ import DetailsList from './DetailsList';
 
 
 const useStyles = makeStyles((theme) => ({
-    content: {
-        paddingBottom: theme.spacing(2.5),
+    title: {
+        paddingBottom: theme.spacing(1),
     },
     header: {
-        paddingBottom: theme.spacing(2.5),
+        paddingBottom: theme.spacing(2),
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -42,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
     },
     chip: {
         margin: theme.spacing(1, 1, 0, 0),
-    },
-    contactDetails: {
-        paddingTop: theme.spacing(2.5),
     },
     actions: {
         display: 'flex',
@@ -127,8 +125,8 @@ const DetailsDialog = ({id, open, setOpen}) => {
 
     return (
         <Dialog open={open} onClose={handleClose} TransitionComponent={Grow} fullScreen={fullScreen} fullWidth>
-            <DialogContent className={classes.content}>
 
+            <DialogTitle className={classes.title}>
                 <Hidden smUp>
                     <div className={classes.actions}>
                         <div>
@@ -170,12 +168,11 @@ const DetailsDialog = ({id, open, setOpen}) => {
 
                 <Divider/>
 
-                <div className={classes.contactDetails}>
-                    <Typography>Contact details</Typography>
+            </DialogTitle>
 
-                    <DetailsList contact={contact}/>
-                </div>
-
+            <DialogContent>
+                <Typography>Contact details</Typography>
+                <DetailsList contact={contact}/>
             </DialogContent>
         </Dialog>
     );

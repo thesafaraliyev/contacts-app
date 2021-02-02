@@ -81,13 +81,13 @@ const Density = ({open, setOpen, dense, setDense}) => {
                 <ButtonGroup className={classes.buttonGroup} disableElevation disableRipple size='small'>
                     <Button
                         className={classes.button}
-                        variant={`${value === 0 ? 'contained' : 'text'}`}
+                        variant={`${value === 0 ? 'contained' : ''}`}
                         onClick={() => handleChange(0)}>
                         Comfortable
                     </Button>
                     <Button
                         className={classes.button}
-                        variant={`${value === 1 ? 'contained' : 'text'}`}
+                        variant={`${value === 1 ? 'contained' : ''}`}
                         onClick={() => handleChange(1)}>
                         Compact
                     </Button>

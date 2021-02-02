@@ -75,7 +75,7 @@ const Cell = withStyles((theme) => ({
 export default function TBody({rows, selected, selectRow, dense, styles}) {
     const classes = useStyles();
     const [selectedId, setSelectedId] = React.useState(null);
-    const [detailsOpen, setDetailsOpen] = React.useState(true);
+    const [detailsOpen, setDetailsOpen] = React.useState(false);
 
     const isSelected = name => selected.indexOf(name) !== -1;
 
@@ -93,12 +93,6 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
 
     return (
         <TableBody>
-            <DetailsDialog
-                id={selectedId}
-                open={detailsOpen}
-                setOpen={setDetailsOpen}
-            />
-
             <SectionHeader header={'Contacts'} rowCount={rows.length}/>
 
             {rows.map(row => {
@@ -148,6 +142,8 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
                     </TableRow>
                 );
             })}
+
+            <DetailsDialog id={selectedId} open={detailsOpen} setOpen={setDetailsOpen}/>
         </TableBody>
     );
 }
