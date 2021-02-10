@@ -5,7 +5,7 @@ import {Toolbar, Fab, Hidden} from '@material-ui/core';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 
 import ContactsTable from "./Table";
-import CreateDialog from "./Contact/Create";
+import AddEditDialog from "./Contact/AddEditDialog/";
 // import Toast from "./Shared/Toast";
 
 
@@ -83,7 +83,11 @@ export default function Body({sidebarOpen}) {
                 </Fab>
             </Hidden>
 
-            <CreateDialog open={contactCreateOpen} setOpen={setContactCreateOpen}/>
+            <AddEditDialog open={contactCreateOpen} setOpen={setContactCreateOpen} data={{
+                emails: [{email: '', label: ''}],
+                numbers: [{code: '994', number: '', label: ''}],
+                websites: [{name: '', label: ''}],
+            }}/>
             {/*<Toast/>*/}
         </main>
     );
