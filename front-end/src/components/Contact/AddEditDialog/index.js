@@ -42,22 +42,31 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Input(props) {
+
+const defaults = {
+    emails: [{email: '', label: ''}],
+    numbers: [{code: '994', number: '', label: ''}],
+    websites: [{name: '', label: ''}],
+}
+
+
+const Input = props => {
     return <TextField fullWidth color='secondary' size='small' variant='outlined' {...props}/>
 }
 
-const AddEditDialog = ({open, setOpen, data, id = null}) => {
+
+const AddEditDialog = ({open, setOpen, data = null, id = null}) => {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
     const [showAdditionalFields, setShowAdditionalFields] = React.useState(false);
-    const [values, setValues] = React.useState(data);
+    const [values, setValues] = React.useState(data || defaults);
 
 
     const handleClose = () => {
         console.log(values)
-        setValues(data)
+        setValues(defaults)
         setOpen(false);
     };
 

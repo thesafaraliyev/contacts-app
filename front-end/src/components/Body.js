@@ -83,11 +83,7 @@ export default function Body({sidebarOpen}) {
                 </Fab>
             </Hidden>
 
-            <AddEditDialog open={contactCreateOpen} setOpen={setContactCreateOpen} data={{
-                emails: [{email: '', label: ''}],
-                numbers: [{code: '994', number: '', label: ''}],
-                websites: [{name: '', label: ''}],
-            }}/>
+            <AddEditDialog open={contactCreateOpen} setOpen={setContactCreateOpen}/>
             {/*<Toast/>*/}
         </main>
     );
