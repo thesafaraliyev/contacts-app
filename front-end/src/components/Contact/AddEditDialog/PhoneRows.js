@@ -3,7 +3,7 @@ import React from 'react';
 import {Grid, TextField} from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import PhoneOutlinedIcon from "@material-ui/icons/PhoneOutlined";
+import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 
 import COUNTRIES from '../../../api/countries';
 import Header from './Row/Header';
