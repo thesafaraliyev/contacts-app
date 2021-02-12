@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import {List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 
 import MailOutlinedIcon from '@material-ui/icons/MailOutlined';
 import CakeOutlinedIcon from '@material-ui/icons/CakeOutlined';
@@ -68,26 +68,26 @@ const DetailsList = ({contact}) => {
 
     return (
         <List dense>
-            {contact.numbers.map((number, index) => (
+            {contact.numbers.map((row, index) => (
                 <ListItem key={index} className={classes.item}>
                     {index === 0 && <ListItemIcon><PhoneOutlinedIcon fontSize='small'/></ListItemIcon>}
                     <ListItemText
                         className={classes.itemText}
                         inset={index > 0}
-                        primary={number.value}
-                        secondary={<SecondaryText text={number.label}/>}
+                        primary={row.number}
+                        secondary={<SecondaryText text={row.label}/>}
                     />
                 </ListItem>
             ))}
 
-            {contact.mails.map((mail, index) => (
+            {contact.emails.map((row, index) => (
                 <ListItem key={index} className={classes.item}>
                     {index === 0 && <ListItemIcon><MailOutlinedIcon fontSize='small'/></ListItemIcon>}
                     <ListItemText
                         className={classes.itemText}
                         inset={index > 0}
-                        primary={mail.value}
-                        secondary={<SecondaryText text={mail.label}/>}
+                        primary={row.email}
+                        secondary={<SecondaryText text={row.label}/>}
                     />
                 </ListItem>
             ))}
@@ -113,7 +113,7 @@ const DetailsList = ({contact}) => {
                     <ListItemText
                         className={classes.itemText}
                         inset={index > 0}
-                        primary={website.value}
+                        primary={website.name}
                         secondary={<SecondaryText text={website.label}/>}/>
                 </ListItem>
             ))}

@@ -10,6 +10,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 import SectionHeader from './SectionHeader';
 import DetailsDialog from '../Contact/DetailsDialog';
+import AddEditDialog from '../Contact/AddEditDialog';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,10 +73,67 @@ const Cell = withStyles((theme) => ({
 }))(TableCell);
 
 
+const dummyContact = {
+    id: 1,
+    name: 'Trevor',
+    surname: 'Philips',
+    birthday: '11/11/1996',
+    company: 'Trevor Philips Enterprises',
+    jobTitle: 'Founder & CEO',
+    address: 'Los Santos, San Andreas',
+    numbers: [
+        {
+            code: '994',
+            number: '4561111',
+            label: 'Home',
+        },
+        {
+            code: '994',
+            number: '4567777',
+            label: '',
+        },
+    ],
+    emails: [
+        {
+            email: 'trevorphilips@mail.com',
+            label: 'Home',
+        },
+        {
+            email: 'trevorswork@mail.com',
+            label: '',
+        },
+    ],
+    websites: [
+        {
+            name: 'trevorphilips.com',
+            label: 'Blog',
+        },
+    ],
+    labels: [
+        {
+            slug: 'friends',
+            name: 'Friends',
+        },
+        {
+            slug: 'other',
+            name: 'Other',
+        },
+    ],
+};
+
+
+function fetchContact(id) {
+    return dummyContact;
+}
+
+
 export default function TBody({rows, selected, selectRow, dense, styles}) {
     const classes = useStyles();
-    const [selectedId, setSelectedId] = React.useState(null);
     const [detailsOpen, setDetailsOpen] = React.useState(false);
+    const [editOpen, setEditOpen] = React.useState(false);
+
+    const [selectedId, setSelectedId] = React.useState(null);
+    const [contact, setContact] = React.useState({});
 
     const isSelected = name => selected.indexOf(name) !== -1;
 
@@ -85,11 +143,29 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
         selectRow(event.target.value);
     }
 
+    const handleEditClick = (event, id) => {
+        event.stopPropagation();
+        setSelectedId(id)
+        setEditOpen(true);
+    }
+
 
     const handleRowClick = id => {
         setSelectedId(id);
         setDetailsOpen(true);
     }
+
+
+    React.useEffect(() => {
+        setContact(fetchContact(selectedId))
+        // console.log(contact)
+            // .then(contact => {
+            //     setContact(contact)
+            // })
+            // .catch()
+    }, [selectedId])
+
+    console.log('here1')
 
     return (
         <TableBody>
@@ -132,7 +208,9 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
                             <IconButton className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
                                 <StarBorderOutlinedIcon fontSize='small'/>
                             </IconButton>
-                            <IconButton className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
+                            <IconButton
+                                onClick={event => handleEditClick(event, 1)}
+                                className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
                                 <EditOutlinedIcon fontSize='small'/>
                             </IconButton>
                             <IconButton className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
@@ -143,7 +221,8 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
                 );
             })}
 
-            <DetailsDialog id={selectedId} open={detailsOpen} setOpen={setDetailsOpen}/>
+            <DetailsDialog open={detailsOpen} setOpen={setDetailsOpen} contact={contact}/>
+            <AddEditDialog open={editOpen} setOpen={setEditOpen} data={contact} id={selectedId}/>
         </TableBody>
     );
 }

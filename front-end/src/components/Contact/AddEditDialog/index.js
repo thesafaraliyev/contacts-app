@@ -55,13 +55,14 @@ const Input = props => {
 }
 
 
-const AddEditDialog = ({open, setOpen, data = null, id = null}) => {
+const AddEditDialog = ({open, setOpen, data = {}, id = null}) => {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
     const [showAdditionalFields, setShowAdditionalFields] = React.useState(false);
-    const [values, setValues] = React.useState(data || defaults);
+    // const [values, setValues] = React.useState(Object.keys(data).length === 0 ? defaults : data);
+    const [values, setValues] = React.useState(id ? data : defaults);
 
 
     const handleClose = () => {

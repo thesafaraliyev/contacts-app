@@ -17,7 +17,7 @@ import {useTheme, makeStyles} from '@material-ui/core/styles';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
-import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
+import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 
 import DetailsList from './DetailsList';
@@ -51,54 +51,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const contact = {
-    id: 1,
-    firstname: 'Trevor',
-    surname: 'Philips',
-    birthday: '11 November 1996',
-    company: 'Trevor Philips Enterprises',
-    jobTitle: 'Founder & CEO',
-    address: 'Los Santos, San Andreas',
-    numbers: [
-        {
-            value: '+2024561111',
-            label: 'Home',
-        },
-        {
-            value: '+2024567777',
-            label: '',
-        },
-    ],
-    mails: [
-        {
-            value: 'trevorphilips@mail.com',
-            label: 'Home',
-        },
-        {
-            value: 'trevorswork@mail.com',
-            label: '',
-        },
-    ],
-    websites: [
-        {
-            value: 'trevorphilips.com',
-            label: 'Blog',
-        },
-    ],
-    labels: [
-        {
-            slug: 'friends',
-            name: 'Friends',
-        },
-        {
-            slug: 'other',
-            name: 'Other',
-        },
-    ],
-};
 
+const DetailsDialog = ({open, setOpen, contact = {}}) => {
+    if (Object.keys(contact).length === 0) {
+        return null;
+    }
 
-const DetailsDialog = ({id, open, setOpen}) => {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
@@ -148,7 +106,7 @@ const DetailsDialog = ({id, open, setOpen}) => {
 
                     <div className={classes.titleContainer}>
                         <Typography variant='h5'>
-                            {contact.firstname} {contact.surname}
+                            {contact.name} {contact.surname}
                         </Typography>
 
                         <div>

@@ -4,8 +4,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Toolbar, Fab, Hidden} from '@material-ui/core';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 
-import ContactsTable from "./Table";
-import AddEditDialog from "./Contact/AddEditDialog/";
+import ContactsTable from './Table';
+import AddEditDialog from './Contact/AddEditDialog/';
 // import Toast from "./Shared/Toast";
 
 
