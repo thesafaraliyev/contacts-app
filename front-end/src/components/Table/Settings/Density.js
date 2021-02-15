@@ -12,9 +12,6 @@ import {
     useMediaQuery
 } from '@material-ui/core';
 
-import comfortable from '../../../../public/assets/images/comfortable.png'
-import compact from '../../../../public/assets/images/compact.png'
-
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -46,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Density = ({open, setOpen, dense, setDense}) => {
     const classes = useStyles()
-    const [imgSrc, setImgSrc] = React.useState(dense ? compact : comfortable);
+    const [imgSrc, setImgSrc] = React.useState(dense ? 'compact' : 'comfortable');
     const [value, setValue] = React.useState(dense);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
@@ -60,7 +57,7 @@ const Density = ({open, setOpen, dense, setDense}) => {
 
     const handleChange = type => {
         setValue(type);
-        setImgSrc(type ? compact : comfortable);
+        setImgSrc(type ? 'compact' : 'comfortable');
     };
 
     return (
@@ -76,7 +73,10 @@ const Density = ({open, setOpen, dense, setDense}) => {
 
             <DialogContent className={classes.content}>
                 <div className={classes.imgContainer}>
-                    <img src={imgSrc} alt={`Density ${value}`} className={classes.media}/>
+                    <img
+                        src={`assets/images/${imgSrc}.png`}
+                         alt={`Density ${value}`}
+                        className={classes.media}/>
                 </div>
                 <ButtonGroup className={classes.buttonGroup} disableElevation disableRipple size='small'>
                     <Button
