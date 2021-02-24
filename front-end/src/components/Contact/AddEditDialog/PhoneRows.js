@@ -5,7 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 
-import COUNTRIES from '../../../api/countries';
+import {COUNTRIES} from '../../../utils/dummyData';
 import Header from './Row/Header';
 import Actions from './Row/Actions';
 import Container from './Row/';

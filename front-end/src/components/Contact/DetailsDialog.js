@@ -21,6 +21,7 @@ import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 
 import DetailsList from './DetailsList';
+import Api from '../../utils/api';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,26 +53,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DetailsDialog = ({open, setOpen, contact = {}}) => {
-    if (Object.keys(contact).length === 0) {
+const api = new Api();
+
+
+const DetailsDialog = ({open, setOpen, id, setEditOpen}) => {
+    if (null === id) {
         return null;
     }
 
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+    const contact = api.fetchContact(1);
 
 
     const handleClose = () => {
         setOpen(false);
     };
 
+
+    const handleEdit = () => {
+        setOpen(false);
+        setEditOpen(true);
+    }
+
     const settingButtons = (
         <React.Fragment>
             <IconButton>
                 <StarBorderOutlinedIcon fontSize='small'/>
             </IconButton>
-            <IconButton>
+            <IconButton onClick={handleEdit}>
                 <EditOutlinedIcon fontSize='small'/>
             </IconButton>
             <IconButton>

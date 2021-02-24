@@ -24,6 +24,7 @@ import EmailRows from './EmailRows';
 import WebsiteRows from './WebsiteRows';
 import {IconHeader} from './Row/Header';
 import Container from './Row/';
+import Api from '../../../utils/api';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,31 +44,47 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const defaults = {
-    emails: [{email: '', label: ''}],
-    numbers: [{code: '994', number: '', label: ''}],
-    websites: [{name: '', label: ''}],
-}
-
-
 const Input = props => {
     return <TextField fullWidth color='secondary' size='small' variant='outlined' {...props}/>
 }
 
+const defaults = {
+    emails: [{email: '', label: ''}],
+    numbers: [{code: '994', number: '', label: ''}],
+    websites: [{name: '', label: ''}],
+};
 
-const AddEditDialog = ({open, setOpen, data = {}, id = null}) => {
+const api = new Api();
+
+const AddEditDialog = ({open, setOpen, contacts, setContacts, id = null}) => {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
     const [showAdditionalFields, setShowAdditionalFields] = React.useState(false);
-    // const [values, setValues] = React.useState(Object.keys(data).length === 0 ? defaults : data);
-    const [values, setValues] = React.useState(id ? data : defaults);
+    const [values, setValues] = React.useState({});
 
+
+    React.useEffect(() => {
+        setValues(null === id ? defaults : api.fetchContact(id))
+    }, [id, open])
+
+
+    const handleSave = () => {
+        setContacts([...contacts, {
+            id: 3,
+            name: values.name,
+            surname: values.surname,
+            email: 'tommyvercetti@mail.com',
+            number: '+442078391377',
+            address: 'Miami, Florid',
+            birthday: '29 Jun 1995',
+        },])
+        setOpen(false);
+    };
 
     const handleClose = () => {
-        console.log(values)
-        setValues(defaults)
+        // setValues({})
         setOpen(false);
     };
 
@@ -189,7 +206,7 @@ const AddEditDialog = ({open, setOpen, data = {}, id = null}) => {
                 <Button onClick={handleShowMode}>Show {showAdditionalFields ? 'less' : 'more'}</Button>
                 <div>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose} disabled={false}>Save</Button>
+                    <Button onClick={handleSave} disabled={false}>Save</Button>
                 </div>
             </DialogActions>
         </Dialog>

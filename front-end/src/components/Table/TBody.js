@@ -73,67 +73,20 @@ const Cell = withStyles((theme) => ({
 }))(TableCell);
 
 
-const dummyContact = {
-    id: 1,
-    name: 'Trevor',
-    surname: 'Philips',
-    birthday: '11/11/1996',
-    company: 'Trevor Philips Enterprises',
-    jobTitle: 'Founder & CEO',
-    address: 'Los Santos, San Andreas',
-    numbers: [
-        {
-            code: '994',
-            number: '4561111',
-            label: 'Home',
-        },
-        {
-            code: '994',
-            number: '4567777',
-            label: '',
-        },
-    ],
-    emails: [
-        {
-            email: 'trevorphilips@mail.com',
-            label: 'Home',
-        },
-        {
-            email: 'trevorswork@mail.com',
-            label: '',
-        },
-    ],
-    websites: [
-        {
-            name: 'trevorphilips.com',
-            label: 'Blog',
-        },
-    ],
-    labels: [
-        {
-            slug: 'friends',
-            name: 'Friends',
-        },
-        {
-            slug: 'other',
-            name: 'Other',
-        },
-    ],
-};
-
-
-function fetchContact(id) {
-    return dummyContact;
-}
-
-
-export default function TBody({rows, selected, selectRow, dense, styles}) {
+export default function TBody({contacts, setContacts, selected, selectRow, dense, styles}) {
     const classes = useStyles();
     const [detailsOpen, setDetailsOpen] = React.useState(false);
     const [editOpen, setEditOpen] = React.useState(false);
 
-    const [selectedId, setSelectedId] = React.useState(null);
-    const [contact, setContact] = React.useState({});
+    const [selectedContactId, setSelectedContactId] = React.useState(null);
+
+
+    const handleEditClick = (event, id) => {
+        event.stopPropagation();
+        setSelectedContactId(id)
+        setEditOpen(true);
+    }
+
 
     const isSelected = name => selected.indexOf(name) !== -1;
 
@@ -143,40 +96,23 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
         selectRow(event.target.value);
     }
 
-    const handleEditClick = (event, id) => {
-        event.stopPropagation();
-        setSelectedId(id)
-        setEditOpen(true);
-    }
-
 
     const handleRowClick = id => {
-        setSelectedId(id);
+        setSelectedContactId(id);
         setDetailsOpen(true);
     }
 
 
-    React.useEffect(() => {
-        setContact(fetchContact(selectedId))
-        // console.log(contact)
-            // .then(contact => {
-            //     setContact(contact)
-            // })
-            // .catch()
-    }, [selectedId])
-
-    console.log('here1')
-
     return (
         <TableBody>
-            <SectionHeader header={'Contacts'} rowCount={rows.length}/>
+            <SectionHeader header={'Contacts'} rowCount={contacts.length}/>
 
-            {rows.map(row => {
+            {contacts.map((row, index) => {
                 const isItemSelected = isSelected(row.name);
 
                 return (
                     <TableRow
-                        onClick={() => handleRowClick(row.id)}
+                        onClick={() => handleRowClick(index)}
                         hover
                         aria-checked={isItemSelected}
                         tabIndex={-1}
@@ -198,9 +134,9 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
                                 alt="Remy Sharp"
                                 src="/static/images/avatar/1.jpg"/>}
                         </TableCell>
-                        <Cell className={classes.nameCell}>{row.name}</Cell>
+                        <Cell className={classes.nameCell}>{row.name} {row.surname}</Cell>
                         <Cell className={`${classes.emailCell} ${styles.xsShow}`}>{row.email}</Cell>
-                        <Cell className={`${classes.phoneNumberCell} ${styles.mdShow}`}>{row.phoneNumber}</Cell>
+                        <Cell className={`${classes.phoneNumberCell} ${styles.mdShow}`}>{row.number}</Cell>
                         <Cell className={`${classes.addressCell} ${styles.mdShow}`}>{row.address}</Cell>
                         <Cell className={`${classes.birthdayCell} ${styles.lgShow}`}>{row.birthday}</Cell>
 
@@ -209,7 +145,7 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
                                 <StarBorderOutlinedIcon fontSize='small'/>
                             </IconButton>
                             <IconButton
-                                onClick={event => handleEditClick(event, 1)}
+                                onClick={event => handleEditClick(event, index)}
                                 className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
                                 <EditOutlinedIcon fontSize='small'/>
                             </IconButton>
@@ -221,15 +157,26 @@ export default function TBody({rows, selected, selectRow, dense, styles}) {
                 );
             })}
 
-            <DetailsDialog open={detailsOpen} setOpen={setDetailsOpen} contact={contact}/>
-            <AddEditDialog open={editOpen} setOpen={setEditOpen} data={contact} id={selectedId}/>
+            <DetailsDialog
+                open={detailsOpen}
+                setOpen={setDetailsOpen}
+                id={selectedContactId}
+                setEditOpen={setEditOpen}/>
+
+            <AddEditDialog
+                open={editOpen}
+                setOpen={setEditOpen}
+                id={selectedContactId}
+                contacts={contacts}
+                setContacts={setContacts}
+            />
         </TableBody>
     );
 }
 
 
 TBody.propTypes = {
-    rows: PropTypes.array.isRequired,
+    contacts: PropTypes.array.isRequired,
     dense: PropTypes.number.isRequired,
     styles: PropTypes.object.isRequired,
     selected: PropTypes.array.isRequired,

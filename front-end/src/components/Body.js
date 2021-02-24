@@ -6,6 +6,7 @@ import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 
 import ContactsTable from './Table';
 import AddEditDialog from './Contact/AddEditDialog/';
+import Api from '../utils/api';
 // import Toast from "./Shared/Toast";
 
 
@@ -46,31 +47,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
-const createContact = (id, name, email, phoneNumber, address, birthday) => {
-    return {id, name, email, phoneNumber, address, birthday};
-}
-
-const contacts = [
-    createContact(1, 'Trevor Philips', 'trevorphilips@mail.com', '+2024561111', 'Los Santos, San Andreas', '11 Nov 1996'),
-    createContact(2, 'Tommy Vercetti', 'tommyvercetti@mail.com', '+442078391377', 'Miami, Florida', '29 Jun 1995'),
-];
+const api = new Api();
 
 
 export default function Body({sidebarOpen}) {
     const classes = useStyles();
-    const [contactCreateOpen, setContactCreateOpen] = React.useState(false);
+    const [createContactOpen, setCreateContactOpen] = React.useState(false);
+    const [contacts, setContacts] = React.useState(api.getContacts());
 
 
-    const handleOpen = () => {
-        setContactCreateOpen(true)
-    }
+    const handleOpen = () => setCreateContactOpen(true)
 
     return (
         <main className={`${classes.root} ${sidebarOpen ? classes.contentShift : ''}`}>
             <Toolbar variant={'dense'}/>
 
-            <ContactsTable contacts={contacts}/>
+            <ContactsTable contacts={contacts} setContacts={setContacts}/>
 
             <Hidden smUp>
                 <Fab color='secondary' size='medium' className={classes.xsFab} onClick={handleOpen}>
@@ -83,7 +75,12 @@ export default function Body({sidebarOpen}) {
                 </Fab>
             </Hidden>
 
-            <AddEditDialog open={contactCreateOpen} setOpen={setContactCreateOpen}/>
+            <AddEditDialog
+                open={createContactOpen}
+                setOpen={setCreateContactOpen}
+                contacts={contacts}
+                setContacts={setContacts}/>
+
             {/*<Toast/>*/}
         </main>
     );

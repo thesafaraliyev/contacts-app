@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ContactsTable({contacts}) {
+export default function ContactsTable({contacts, setContacts}) {
     const classes = useStyles();
     const [selected, setSelected] = React.useState([]);
     const [dense, setDense] = React.useState(parseInt(localStorage.getItem('tableDensity') || 0, 10));
@@ -73,7 +73,8 @@ export default function ContactsTable({contacts}) {
                 selectAllRows={handleSelectAllClick}
             />
             <TBody
-                rows={contacts}
+                contacts={contacts}
+                setContacts={setContacts}
                 dense={dense}
                 styles={classes}
                 selected={selected}
