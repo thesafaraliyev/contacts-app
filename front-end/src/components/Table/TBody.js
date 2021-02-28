@@ -11,6 +11,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import SectionHeader from './SectionHeader';
 import DetailsDialog from '../Contact/DetailsDialog';
 import AddEditDialog from '../Contact/AddEditDialog';
+import Options from '../Contact/OptionsMenu';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -77,6 +78,7 @@ export default function TBody({contacts, setContacts, selected, selectRow, dense
     const classes = useStyles();
     const [detailsOpen, setDetailsOpen] = React.useState(false);
     const [editOpen, setEditOpen] = React.useState(false);
+    const [optionsMenuAnchorEl, setOptionsMenuAnchorEl] = React.useState(null);
 
     const [selectedContactId, setSelectedContactId] = React.useState(null);
 
@@ -94,6 +96,12 @@ export default function TBody({contacts, setContacts, selected, selectRow, dense
     const handleCheckboxCheck = event => {
         event.stopPropagation();
         selectRow(event.target.value);
+    }
+
+
+    const handleOptionsClick = (event, id) => {
+        event.stopPropagation();
+        setOptionsMenuAnchorEl(event.currentTarget);
     }
 
 
@@ -149,7 +157,9 @@ export default function TBody({contacts, setContacts, selected, selectRow, dense
                                 className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
                                 <EditOutlinedIcon fontSize='small'/>
                             </IconButton>
-                            <IconButton className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
+                            <IconButton
+                                onClick={event => handleOptionsClick(event, index)}
+                                className={`${classes.hidden} ${dense ? classes.marginLeft : ''}`}>
                                 <MoreVertOutlinedIcon fontSize='small'/>
                             </IconButton>
                         </TableCell>
@@ -170,6 +180,7 @@ export default function TBody({contacts, setContacts, selected, selectRow, dense
                 contacts={contacts}
                 setContacts={setContacts}
             />
+            <Options anchorEl={optionsMenuAnchorEl} setAnchorEl={setOptionsMenuAnchorEl}/>
         </TableBody>
     );
 }

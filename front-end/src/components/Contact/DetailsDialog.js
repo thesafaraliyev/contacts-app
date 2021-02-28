@@ -64,7 +64,7 @@ const DetailsDialog = ({open, setOpen, id, setEditOpen}) => {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
-    const contact = api.fetchContact(1);
+    const contact = api.fetchContact(id);
 
 
     const handleClose = () => {
